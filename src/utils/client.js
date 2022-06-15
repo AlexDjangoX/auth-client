@@ -3,7 +3,6 @@ const client = {
   get: async (path) => {
     const res = await fetch(`${apiUrl}${path}`);
     const data = await res.json();
-
     return data;
   },
 

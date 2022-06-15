@@ -21,7 +21,7 @@ export default function App() {
 
       const response = await client.post("/register", opts);
       console.log(response);
-      setRegisterResponse("User created. Well done !!!");
+      setRegisterResponse(`${user.username}: you are now registered !!`);
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +38,7 @@ export default function App() {
 
       const response = await client.post("/login", opts);
       console.log(response);
-      setRegisterResponse("User created. Well done !!!");
+      setLoginResponse(`${user.username}: you are now logged in !!`);
     } catch (err) {
       console.log(err);
     }
