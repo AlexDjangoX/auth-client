@@ -37,7 +37,7 @@ export default function App() {
       };
 
       const response = await client.post("/login", opts);
-      console.log(response);
+      console.log(response.data);
       setLoginResponse(`${user.username}: you are now logged in !!`);
     } catch (err) {
       console.log(err);
@@ -54,6 +54,8 @@ export default function App() {
       ...user,
       [name]: value,
     });
+
+    console.log({ [name]: value });
   };
 
   return (

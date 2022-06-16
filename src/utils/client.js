@@ -9,7 +9,6 @@ const client = {
   post: async (path, opts) => {
     const res = await fetch(`${apiUrl}${path}`, opts);
     const data = await res.json();
-    console.log(data);
     return data;
   },
 
