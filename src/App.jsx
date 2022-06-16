@@ -3,6 +3,7 @@ import { useState } from "react";
 import Form from "./components/Form";
 import Input from "./components/Input";
 import client from "./utils/client";
+const apiUrl = `http://localhost:4000`;
 
 export default function App() {
   const [user, setUser] = useState({ username: "", password: "" });
@@ -12,40 +13,43 @@ export default function App() {
   const register = async (e) => {
     e.preventDefault();
 
-    try {
-      const opts = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      };
+    const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    };
 
-      const response = await client.post("/register", opts);
-      console.log(response);
-      setRegisterResponse(`${user.username}: you are now registered !!`);
-    } catch (err) {
-      console.log(err);
+    const res = await fetch(`${apiUrl}/register`, opts);
+    const data = await res.json();
+
+    console.log("response line 24");
+
+    if (res.ok) {
+      setRegisterResponse(`${data.data.username}: you are now registered !!`);
+    } else {
+      setRegisterResponse(`${data.error}`);
     }
   };
 
   const login = async (e) => {
     e.preventDefault();
-    try {
-      const opts = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      };
 
-      const response = await client.post("/login", opts);
-      console.log(response.data);
-      setLoginResponse(`${user.username}: you are now logged in !!`);
-    } catch (err) {
-      console.log(err);
+    const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    };
+
+    const res = await fetch(`${apiUrl}/login`, opts);
+    const data = await res.json();
+
+    if (res.ok) {
+      setLoginResponse(`${data.name}: you are now logged in !!`);
+    } else {
+      setLoginResponse(`${data.error}`);
     }
+    console.log("login returned token", data.data);
   };
-
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
 
   const handleChange = (e) => {
     const { value, name } = e.target;
